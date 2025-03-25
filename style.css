@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #C5C5C5;
+}
+
+.crafting-table>* {
+  margin: 5vmin auto;
+  width: max-content;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5vmin;
+}
+
+table {
+  border-spacing: 0.4vmin;
+}
+
+.row td {
+  border: 0.7vmin solid #FCFBFD;
+  border-top-color: #383638;
+  border-left-color: #383638;
+  width: 14vmin;
+  height: 14vmin;
+  background: #8A8A8A;
+}
+
+.inventory td {
+  border: 0.5vmin solid #FCFBFD;
+  border-top-color: #383638;
+  border-left-color: #383638;
+  width: 10vmin;
+  height: 10vmin;
+  background: #8A8A8A;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
