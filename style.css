@@ -44,3 +44,17 @@ img {
   display: block;
   width: 100%;
 }
+
+[data-count] {
+  position: relative;
+}
+
+[data-count]::after {
+  content: attr(data-count);
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: white;
+  font-weight: bold;
+  font-family: fantasy;
+}
