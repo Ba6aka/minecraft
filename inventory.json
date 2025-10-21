@@ -1,0 +1,12 @@
+[
+  {
+    "id": "wood",
+    "count": 5,
+    "src": "./icons/Acacia_Log.png"
+  },
+  {
+    "id": "planks",
+    "count": 1,
+    "src": "./icons/Acacia_Planks.png"
+  }
+]

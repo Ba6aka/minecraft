@@ -45,11 +45,11 @@ img {
   width: 100%;
 }
 
-[data-count] {
+td[data-count]:has(img) {
   position: relative;
 }
 
-[data-count]::after {
+td[data-count]:has(img)::after {
   content: attr(data-count);
   position: absolute;
   bottom: 5px;
