@@ -11,18 +11,13 @@ const recipes = [
       null, 'wood', null,
       null, null, null,
     ],
-    result: './icons/Acacia_Planks.png'
+    result: './icons/Acacia_Planks.png',
+    count: 4
   }
 ]
 
 let gridState = Array(9).fill(null)
 let item
-
-// images.forEach(image => {
-//   image.ondragstart = e => {
-//     item = e.target;
-//   }
-// })
 
 document.addEventListener('dragstart', e => {
   if (e.target.tagName === 'IMG') {
@@ -36,21 +31,42 @@ tds.forEach(td => {
 })
 
 function handleDrop(e) {
-  e.preventDefault();
-  if (this.childElementCount) return
+  e.preventDefault()
+  if (this.childElementCount) {
+    if (this.firstChild.src == item.src) {
+      item.parentElement.dataset.count = +item.parentElement.dataset.count + +this.dataset.count
+    }
+    else return
+  }
+  // result slot
   if (item == resultSlot.firstChild) {
-    e.target.append(item);
-    craftingGrid.forEach(slot => slot.replaceChildren())
-    resultSlot.replaceChildren()
+    if (e.target.tagName == 'TD') {
+      e.target.dataset.count = item.parentElement.dataset.count
+      e.target.append(item.cloneNode())
+    }
+    else {
+      e.target.parentElement.dataset.count = item.parentElement.dataset.count
+    }
+
+    craftingGrid.forEach(slot => {
+      if (slot.dataset.count > 1) slot.dataset.count -= 1
+      else slot.replaceChildren()
+    })
+
     return
   }
-  e.target.append(item);
+
+  if (e.target.tagName == 'TD') e.target.dataset.count = item.parentElement.dataset.count
+  else e.target.parentElement.dataset.count = item.parentElement.dataset.count
+
+  delete item.parentElement.dataset.count
+  e.target.append(item)
 }
 
 craftingTable.addEventListener('dragend', () => {
   updateGrid()
   checkRecipe()
-});
+})
 
 function updateGrid() {
   craftingGrid.forEach(slot => {
@@ -65,8 +81,9 @@ function checkRecipe() {
     if (JSON.stringify(recipes[i].pattern) === JSON.stringify(gridState)) {
       let img = document.createElement('img')
       img.src = recipes[i].result
-      img.ondragstart = e => item = e.target;
+      img.ondragstart = e => item = e.target
       resultSlot.replaceChildren(img)
+      img.parentElement.dataset.count = recipes[i].count
       return
     }
   }
@@ -81,8 +98,8 @@ async function inventoryRender() {
   const inventoryState = await response.json()
 
   inventorySlots.forEach(slot => {
-    // slot.innerHTML = ''
-    // slot.removeAttribute('data-count')
+    slot.innerHTML = ''
+    slot.removeAttribute('data-count')
   })
 
   inventoryState.forEach((item, i) => {
